@@ -2,6 +2,19 @@
 
 Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/), версии — [SemVer](https://semver.org/lang/ru/).
 
+## [1.0.2] — 2026-09-07 — репозиторий как источник правды / repo as source of truth
+
+### Для человека
+- Перенесены наработки из локальной копии скилла: собран файл `references/gotchas.md` с граблями, накопленными при реальных загрузках, и ссылка на него из `SKILL.md`.
+- Локальная копия скилла выводится из обращения — плагин из этого репозитория теперь единственный источник правды.
+
+### For agents
+- Added: `plugins/annas-archive/skills/annas-archive/references/gotchas.md`.
+- Changed: `plugins/annas-archive/skills/annas-archive/SKILL.md` — врезка со ссылкой на `references/gotchas.md` после frontmatter.
+- Changed: `plugins/annas-archive/.claude-plugin/plugin.json` — `version` 1.0.1 → 1.0.2.
+- Known issue: `SKILL.md` (Phase 4) и `references/gotchas.md` расходятся в вопросе, тратит ли повторный запрос того же md5 квоту. Требует проверки; до неё считать поведение неопределённым.
+- Migration: не требуется.
+
 ## [1.0.1] — 2026-09-06 — двуязычный README и гейты передачи / bilingual README and handover gates
 
 ### Для человека
