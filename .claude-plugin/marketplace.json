@@ -8,8 +8,8 @@
   "description": "Библиотечные плагины для Claude Code: поиск и скачивание книг и научных статей через членский API Архива Анны.",
   "plugins": [
     {
-      "name": "annas-archive",
-      "source": "./plugins/annas-archive",
+      "name": "books",
+      "source": "./plugins/books",
       "category": "productivity",
       "tags": [
         "books",
@@ -21,5 +21,7 @@
       "description": "Скилл-библиотекарь: находит книгу или статью в Архиве Анны, сам выбирает лучший файл по политике EPUB → английский → новее → популярнее, качает членским API и отчитывается об остатке квоты. Умеет батч-списки и DOI."
     }
   ],
-  "renames": {}
+  "renames": {
+    "annas-archive": "books"
+  }
 }

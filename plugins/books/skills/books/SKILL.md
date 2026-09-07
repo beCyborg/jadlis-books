@@ -1,5 +1,5 @@
 ---
-name: annas-archive
+name: books
 description: >
   Поиск и скачивание книг и научных статей через Архив Анны (Anna's Archive)
   по членскому API быстрых загрузок. Сам выбирает лучший файл по политике
@@ -20,7 +20,7 @@ argument-hint: "<книга/автор, список книг или DOI — н�
 квоты при повторной выдаче URL того же md5; scidb-контент по DOI на книжных
 серверах отдаёт 404.
 
-# /annas-archive — книги и статьи из Архива Анны
+# /books — книги и статьи из Архива Анны
 
 Ты — библиотекарь. Находишь лучший файл по политике фильтров, скачиваешь членским
 API, отчитываешься об остатке квоты.
@@ -32,9 +32,9 @@ API, отчитываешься об остатке квоты.
 ## Константы
 
 ```
-SCRIPTS   = ${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts
-SEARCH    = python3 "${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts/aa_search.py"
-DOWNLOAD  = python3 "${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts/aa_download.py"
+SCRIPTS   = ${CLAUDE_PLUGIN_ROOT}/skills/books/scripts
+SEARCH    = python3 "${CLAUDE_PLUGIN_ROOT}/skills/books/scripts/aa_search.py"
+DOWNLOAD  = python3 "${CLAUDE_PLUGIN_ROOT}/skills/books/scripts/aa_download.py"
 OUT_DIR   = ~/Books/AnnasArchive
 Зеркала   = .gl → .pk → .gd (ротация в скриптах; оверрайд: $ANNAS_ARCHIVE_MIRROR)
 Политика  = EPUB → английский → новее → «популярнее» (композитный score)
@@ -53,8 +53,8 @@ OUT_DIR   = ~/Books/AnnasArchive
 ```bash
 command -v python3 >/dev/null 2>&1 || { echo "ERROR: python3 not found"; exit 1; }
 command -v curl    >/dev/null 2>&1 || { echo "ERROR: curl not found"; exit 1; }
-[ -f "${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts/aa_search.py" ] \
-  || { echo "ERROR: scripts not found at ${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts"; exit 1; }
+[ -f "${CLAUDE_PLUGIN_ROOT}/skills/books/scripts/aa_search.py" ] \
+  || { echo "ERROR: scripts not found at ${CLAUDE_PLUGIN_ROOT}/skills/books/scripts"; exit 1; }
 if [ -z "$ANNAS_ARCHIVE_KEY" ]; then echo "ERROR: ANNAS_ARCHIVE_KEY not set"; exit 1; fi
 mkdir -p ~/Books/AnnasArchive
 echo "OK: key present (${#ANNAS_ARCHIVE_KEY} chars)"
@@ -101,12 +101,12 @@ echo "OK: key present (${#ANNAS_ARCHIVE_KEY} chars)"
 Запрос №1 (строгий, relevance-сортировка по умолчанию):
 
 ```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts/aa_search.py" "<title> <author>" \
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/books/scripts/aa_search.py" "<title> <author>" \
   --ext epub --lang en --content book_nonfiction --limit 10
 ```
 
 - Художественная книга → `--content book_fiction`; сомневаешься → без `--content`.
-- DOI → `python3 "${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts/aa_search.py" "<DOI>"` —
+- DOI → `python3 "${CLAUDE_PLUGIN_ROOT}/skills/books/scripts/aa_search.py" "<DOI>"` —
   распознаётся автоматически: сначала точное попадание через `/scidb/<DOI>`
   (`"mode": "scidb"`, один результат), при промахе — поиск по индексу journals
   (`"mode": "journals_search"`).
@@ -149,7 +149,7 @@ python3 "${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts/aa_search.py" "<titl
 ## Phase 4 — Download
 
 ```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/annas-archive/scripts/aa_download.py" <md5> \
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/books/scripts/aa_download.py" <md5> \
   --name "<Автор> — <Название> (<Год>)"
 ```
 

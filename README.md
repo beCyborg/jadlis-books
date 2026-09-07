@@ -1,6 +1,6 @@
 Русский · [English](README.en.md)
 
-# annas-archive — книги и статьи одной фразой
+# books — книги и статьи одной фразой
 
 Плагин для Claude Code, который превращает «скачай The Mom Test в epub» в файл на диске: поиск в [Архиве Анны](https://annas-archive.org), выбор лучшего файла из десятков дублей, скачивание членским API быстрых загрузок.
 
@@ -20,7 +20,7 @@
 <summary>Синтетический пример отчёта по батчу</summary>
 
 ```
-Скачано 4 из 5 (тег annas-archive--v1.0.1)
+Скачано 4 из 5 (тег books--v1.1.0)
 
 | Книга                         | Формат | Год  | Файл                                    |
 |-------------------------------|--------|------|-----------------------------------------|
@@ -43,7 +43,7 @@
 ```
 Ты — установщик. Выполни ровно эти шаги и ничего сверх них:
 1. Bash: claude plugin marketplace add https://github.com/beCyborg/jadlis-plugins.git
-2. Bash: claude plugin install annas-archive@jadlis
+2. Bash: claude plugin install books@jadlis
 3. Скажи мне одной строкой: «Положи ключ Архива Анны в ~/.claude/settings.json и перезапусти Claude Code».
 ```
 
@@ -51,14 +51,14 @@
 
 ```bash
 claude plugin marketplace add https://github.com/beCyborg/jadlis-plugins.git
-claude plugin install annas-archive@jadlis
+claude plugin install books@jadlis
 ```
 
 Ставится плагин и из отдельного маркетплейса репозитория — `becyborg-library`:
 
 ```bash
-claude plugin marketplace add https://github.com/beCyborg/annas-archive-plugin.git
-claude plugin install annas-archive@becyborg-library
+claude plugin marketplace add https://github.com/beCyborg/jadlis-books.git
+claude plugin install books@becyborg-library
 ```
 
 Полный HTTPS-URL — защита от клона по SSH: shorthand `owner/repo` уходит на SSH, а SSH-ключа на GitHub у нового пользователя обычно нет.
@@ -82,9 +82,9 @@ claude plugin install annas-archive@becyborg-library
 Три сценария, всё обычным текстом или командой скилла:
 
 ```
-/annas-archive:annas-archive скачай The Mom Test в epub
-/annas-archive:annas-archive скачай эти книги: Obviously Awesome, Zero to Sold, Deploy Empathy
-/annas-archive:annas-archive скачай статью 10.1038/nature12373
+/books скачай The Mom Test в epub
+/books скачай эти книги: Obviously Awesome, Zero to Sold, Deploy Empathy
+/books скачай статью 10.1038/nature12373
 ```
 
 - **Одна книга.** Ранжирование `EPUB → английский → больше зеркал → новее → популярнее`; нет EPUB — цепочка `pdf → mobi/azw3 → fb2/djvu`; нет ничего на английском — Claude покажет варианты на других языках и спросит.
@@ -105,11 +105,11 @@ claude plugin install annas-archive@becyborg-library
 У сторонних маркетплейсов авто-обновление у получателя выключено по умолчанию — новая версия приезжает по команде:
 
 ```bash
-claude plugin update annas-archive@jadlis
+claude plugin update books@jadlis
 ```
 
-Либо один раз включить авто-обновление: `/plugin` → **Marketplaces** → `jadlis`. Ставил из `becyborg-library` — подставляй его вместо `jadlis`. Версия задана semver'ом в `plugin.json`, история — [CHANGELOG.md](plugins/annas-archive/CHANGELOG.md). Имена маркетплейса и плагина зафиксированы с первого релиза: переименование ломает существующие установки.
+Либо один раз включить авто-обновление: `/plugin` → **Marketplaces** → `jadlis`. Ставил из `becyborg-library` — подставляй его вместо `jadlis`. Версия задана semver'ом в `plugin.json`, история — [CHANGELOG.md](plugins/books/CHANGELOG.md). В 1.1.0 плагин переименован `annas-archive` → `books`, а репозиторий — в `jadlis-books`; старая установка `annas-archive@becyborg-library` продолжает обновляться через запись `renames` в маркетплейсе.
 
 ## Лицензия
 
-MIT — см. [LICENSE](LICENSE). Детали по скиллу — [plugins/annas-archive/README.md](plugins/annas-archive/README.md).
+MIT — см. [LICENSE](LICENSE). Детали по скиллу — [plugins/books/README.md](plugins/books/README.md).

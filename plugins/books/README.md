@@ -1,6 +1,6 @@
 Русский · [English](README.en.md)
 
-# annas-archive — книги и статьи одной фразой
+# books — книги и статьи одной фразой
 
 Скилл-библиотекарь для Claude Code. Вы называете книгу — Claude ищет её в Архиве Анны, выбирает лучший файл, качает членским API и отчитывается об остатке квоты.
 
@@ -13,7 +13,7 @@
 - «скачай эти книги: …» (список — одним батчем)
 - «скачай статью по DOI 10.1038/nature12373»
 
-Явный вызов: `/annas-archive <запрос>`.
+Явный вызов: `/books <запрос>`.
 
 ## Настройка ключа
 
@@ -47,9 +47,9 @@
 
 | Файл | Роль |
 |---|---|
-| `skills/annas-archive/SKILL.md` | инструкция: политика выбора, фоллбэки, обработка ошибок |
-| `skills/annas-archive/scripts/aa_search.py` | поиск (парсинг HTML `/search`), режимы DOI и `--meta` |
-| `skills/annas-archive/scripts/aa_download.py` | скачивание через `/dyn/api/fast_download.json`, проверка файла |
+| `skills/books/SKILL.md` | инструкция: политика выбора, фоллбэки, обработка ошибок |
+| `skills/books/scripts/aa_search.py` | поиск (парсинг HTML `/search`), режимы DOI и `--meta` |
+| `skills/books/scripts/aa_download.py` | скачивание через `/dyn/api/fast_download.json`, проверка файла |
 
 Оба скрипта — stdlib + `curl`, без зависимостей. HTTP идёт через `curl`, потому что WAF отдаёт 403 на запросы из `urllib`.
 
@@ -69,7 +69,7 @@
 | `API error: Invalid secret key` | Ключ истёк или скопирован с обрезкой — проверьте членство и перевыпустите |
 | `API error` про quota | Дневная квота быстрых загрузок исчерпана — Claude сохранит md5 недокачанного |
 | `all mirrors failed` | Зеркала недоступны из вашей сети — задайте своё: `ANNAS_ARCHIVE_MIRROR=https://<домен>`, туда же, в блок `env` (или профиль шелла), и перезапустите Claude Code |
-| `ERROR: scripts not found` | Плагин установлен некорректно — переустановите: `/plugin install annas-archive@becyborg-library` |
+| `ERROR: scripts not found` | Плагин установлен некорректно — переустановите: `/plugin install books@jadlis` |
 | `downloaded file suspiciously small` | Партнёрский сервер отдал заглушку — Claude возьмёт следующего кандидата |
 
 ## Ограничения

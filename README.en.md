@@ -1,6 +1,6 @@
 [Русский](README.md) · English
 
-# annas-archive — books and papers in one sentence
+# books — books and papers in one sentence
 
 A Claude Code plugin that turns "download The Mom Test in epub" into a file on disk: search on [Anna's Archive](https://annas-archive.org), pick the best file out of dozens of duplicates, download it through the membership fast-download API.
 
@@ -20,7 +20,7 @@ It handles lists ("download these twelve books") and papers by DOI, and reports 
 <summary>Synthetic batch report</summary>
 
 ```
-Downloaded 4 of 5 (tag annas-archive--v1.0.1)
+Downloaded 4 of 5 (tag books--v1.1.0)
 
 | Book                          | Format | Year | File                                    |
 |-------------------------------|--------|------|-----------------------------------------|
@@ -43,7 +43,7 @@ Open Claude Code and paste this block into the input line:
 ```
 You are an installer. Do exactly these steps and nothing beyond them:
 1. Bash: claude plugin marketplace add https://github.com/beCyborg/jadlis-plugins.git
-2. Bash: claude plugin install annas-archive@jadlis
+2. Bash: claude plugin install books@jadlis
 3. Tell me in one line: "Put your Anna's Archive key into ~/.claude/settings.json and restart Claude Code".
 ```
 
@@ -51,14 +51,14 @@ The same two commands by hand, if Bash is unavailable in the app:
 
 ```bash
 claude plugin marketplace add https://github.com/beCyborg/jadlis-plugins.git
-claude plugin install annas-archive@jadlis
+claude plugin install books@jadlis
 ```
 
 The plugin also installs from this repository's own marketplace, `becyborg-library`:
 
 ```bash
-claude plugin marketplace add https://github.com/beCyborg/annas-archive-plugin.git
-claude plugin install annas-archive@becyborg-library
+claude plugin marketplace add https://github.com/beCyborg/jadlis-books.git
+claude plugin install books@becyborg-library
 ```
 
 The full HTTPS URL guards against an SSH clone: the `owner/repo` shorthand goes over SSH, and a new user usually has no SSH key on GitHub.
@@ -82,9 +82,9 @@ No such file yet — this is its entire contents; the file exists — add just t
 Three scenarios, in plain text or as a skill command:
 
 ```
-/annas-archive:annas-archive download The Mom Test in epub
-/annas-archive:annas-archive download these books: Obviously Awesome, Zero to Sold, Deploy Empathy
-/annas-archive:annas-archive download the paper 10.1038/nature12373
+/books download The Mom Test in epub
+/books download these books: Obviously Awesome, Zero to Sold, Deploy Empathy
+/books download the paper 10.1038/nature12373
 ```
 
 - **One book.** Ranking is `EPUB → English → more mirrors → newer → more popular`; no EPUB — the chain `pdf → mobi/azw3 → fb2/djvu`; nothing in English — Claude shows the other-language options and asks.
@@ -105,11 +105,11 @@ Three scenarios, in plain text or as a skill command:
 For third-party marketplaces auto-update is off by default on the recipient's side — a new version arrives on command:
 
 ```bash
-claude plugin update annas-archive@jadlis
+claude plugin update books@jadlis
 ```
 
-Or enable auto-update once: `/plugin` → **Marketplaces** → `jadlis`. If you installed from `becyborg-library`, use that name instead of `jadlis`. The version is explicit semver in `plugin.json`; history in [CHANGELOG.md](plugins/annas-archive/CHANGELOG.md). Marketplace and plugin names are frozen since the first release: renaming breaks existing installs.
+Or enable auto-update once: `/plugin` → **Marketplaces** → `jadlis`. If you installed from `becyborg-library`, use that name instead of `jadlis`. The version is explicit semver in `plugin.json`; history in [CHANGELOG.md](plugins/books/CHANGELOG.md). In 1.1.0 the plugin was renamed `annas-archive` → `books` and the repository to `jadlis-books`; an existing `annas-archive@becyborg-library` install keeps updating through the marketplace `renames` entry.
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Skill details — [plugins/annas-archive/README.en.md](plugins/annas-archive/README.en.md).
+MIT — see [LICENSE](LICENSE). Skill details — [plugins/books/README.en.md](plugins/books/README.en.md).

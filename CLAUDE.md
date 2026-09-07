@@ -1,19 +1,19 @@
-# annas-archive-plugin — конвенции репо
+# jadlis-books — конвенции репо
 
-Репозиторий одного плагина: маркетплейс `becyborg-library`, плагин в `plugins/annas-archive`. Основной путь установки у получателя — хаб `jadlis` (`https://github.com/beCyborg/jadlis-plugins.git`), который тянет этот репо записью `git-subdir` с пином `ref` + `sha`. Правила ниже читает агент, который правит и коммитит.
+Репозиторий одного плагина: маркетплейс `becyborg-library`, плагин в `plugins/books`. Основной путь установки у получателя — хаб `jadlis` (`https://github.com/beCyborg/jadlis-plugins.git`), который тянет этот репо записью `git-subdir` с пином `ref` + `sha`. Правила ниже читает агент, который правит и коммитит.
 
 ## Коммиты
 
-- Тема — Conventional Commits на английском: `type(scope): subject`, ≤72 символа. `scope` = `annas-archive`, `docs` или `repo`.
+- Тема — Conventional Commits на английском: `type(scope): subject`, ≤72 символа. `scope` = `books`, `docs` или `repo`.
 - Тело двухслойное: `Что изменилось:` — 1–3 предложения по-русски для человека; `Details (for agents):` — буллеты `Added / Changed / Removed / Migration / Refs` с путями.
 - Без строк атрибуции (`Co-Authored-By` и подобных).
 
 ## Релизы
 
-- Версия живёт только в `plugins/annas-archive/.claude-plugin/plugin.json`; бамп — в том же коммите, что и изменение (версия = ключ кеша обновлений).
-- Тег `annas-archive--v{X.Y.Z}`: `claude plugin tag --push plugins/annas-archive`. GitHub Release поверх тега: заголовок и тело — `python3 ~/jadlis-plugins/tools/release-notes.py plugins/annas-archive [--title]`.
+- Версия живёт только в `plugins/books/.claude-plugin/plugin.json`; бамп — в том же коммите, что и изменение (версия = ключ кеша обновлений).
+- Тег `books--v{X.Y.Z}`: `claude plugin tag --push plugins/books`. GitHub Release поверх тега: заголовок и тело — `python3 ~/jadlis-plugins/tools/release-notes.py plugins/books [--title]`.
 - `CHANGELOG.md` плагина: `## [X.Y.Z] — YYYY-MM-DD — <кратко по-русски> / <short EN>`, затем `### Для человека` (≤3 буллета) и `### For agents` (`Added / Changed / Removed / Migration / Breaking`, с путями).
-- После релиза обновить пин в хабе: `python3 ~/jadlis-plugins/tools/bump-pin.py annas-archive annas-archive--v{X.Y.Z}`.
+- После релиза обновить пин в хабе: `python3 ~/jadlis-plugins/tools/bump-pin.py books books--v{X.Y.Z}`.
 - Только patch-forward: никаких force-push и переписывания тегов.
 
 ## README и доки
@@ -21,7 +21,7 @@
 - Пара `README.md` (RU) + `README.en.md` (EN) — и в корне, и в папке плагина; первая строка — переключатель языка. Одинаковое число и порядок H2. Проверка: `python3 ~/jadlis-plugins/tools/readme-parity.py .`
 - Пять секций документа инструмента: **Зачем / Как выглядит / Как поставить / Как пользоваться / Границы и стоимость**; дополнительные H2 («Обновление», «Лицензия») — только одинаково в обеих языковых версиях.
 - Иллюстрации — `docs/img/*.webp`, копии из `~/jadlis-plugins/docs/img/`; каждая просмотрена глазами, отметка ☑ ставится в `~/jadlis-plugins/docs/img/INDEX.md`. Схемы — Mermaid.
-- Числа и механику сверять со скриптами (`aa_search.py`, `aa_download.py`) и писать рядом тег (`(тег annas-archive--v1.0.1)`). Примеры вывода — синтетические.
+- Числа и механику сверять со скриптами (`aa_search.py`, `aa_download.py`) и писать рядом тег (`(тег books--v1.0.1)`). Примеры вывода — синтетические.
 - Оценок времени в доках не давать: вместо «за 10 минут» — что именно нужно сделать.
 
 ## Приватность и ключи
@@ -34,7 +34,7 @@
 ## Разработка
 
 - Правки только в рабочем клоне `~/annas-archive-plugin`, никогда в `~/.claude/plugins/marketplaces/` (фоновый рефреш стирает правки).
-- Перед коммитом: `claude plugin validate plugins/annas-archive`, `claude plugin validate .claude-plugin/marketplace.json`, `readme-parity.py`, `privacy-grep.py`.
+- Перед коммитом: `claude plugin validate plugins/books`, `claude plugin validate .claude-plugin/marketplace.json`, `readme-parity.py`, `privacy-grep.py`.
 - Скрипты — stdlib + `curl`, без внешних зависимостей: HTTP через `curl`, потому что WAF отдаёт 403 на `urllib`. Зависимости не добавлять.
-- Имена плагина (`annas-archive`) и маркетплейса (`becyborg-library`) неизменяемы: переименование ломает существующие установки.
+- Имя плагина — `books`, маркетплейс — `becyborg-library` (историческое имя, менять нельзя). Переименование `annas-archive` → `books` (1.1.0) закрыто записью `renames` в `.claude-plugin/marketplace.json`: старые установки продолжают обновляться. Дальнейшие переименования — только с новой записью в `renames`.
 - Язык доков — русский (RU-файл первичен) + английская пара; код, идентификаторы и имена файлов — английский.

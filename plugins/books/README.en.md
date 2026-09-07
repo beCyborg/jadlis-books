@@ -1,6 +1,6 @@
 [Русский](README.md) · English
 
-# annas-archive — books and papers in one sentence
+# books — books and papers in one sentence
 
 A librarian skill for Claude Code. You name a book — Claude finds it on Anna's Archive, picks the best file, downloads it through the membership API and reports the remaining quota.
 
@@ -13,7 +13,7 @@ No separate command is needed — the skill triggers on phrases like:
 - "download these books: …" (a list runs as one batch)
 - "download the paper with DOI 10.1038/nature12373"
 
-Explicit call: `/annas-archive <request>`.
+Explicit call: `/books <request>`.
 
 ## Key setup
 
@@ -47,9 +47,9 @@ Expected: the file `~/Books/AnnasArchive/Rob Fitzpatrick — The Mom Test (2013)
 
 | File | Role |
 |---|---|
-| `skills/annas-archive/SKILL.md` | the instruction: selection policy, fallbacks, error handling |
-| `skills/annas-archive/scripts/aa_search.py` | search (HTML parsing of `/search`), DOI and `--meta` modes |
-| `skills/annas-archive/scripts/aa_download.py` | download via `/dyn/api/fast_download.json`, file verification |
+| `skills/books/SKILL.md` | the instruction: selection policy, fallbacks, error handling |
+| `skills/books/scripts/aa_search.py` | search (HTML parsing of `/search`), DOI and `--meta` modes |
+| `skills/books/scripts/aa_download.py` | download via `/dyn/api/fast_download.json`, file verification |
 
 Both scripts are stdlib + `curl`, with no dependencies. HTTP goes through `curl` because the WAF returns 403 for `urllib` requests.
 
@@ -69,7 +69,7 @@ Both scripts are stdlib + `curl`, with no dependencies. HTTP goes through `curl`
 | `API error: Invalid secret key` | The key expired or was copied truncated — check the membership and reissue |
 | `API error` about quota | The daily fast-download quota is spent — Claude keeps the md5 of what is left |
 | `all mirrors failed` | Mirrors are unreachable from your network — set your own: `ANNAS_ARCHIVE_MIRROR=https://<domain>` in the same `env` block (or shell profile) and restart Claude Code |
-| `ERROR: scripts not found` | The plugin is installed incorrectly — reinstall: `/plugin install annas-archive@becyborg-library` |
+| `ERROR: scripts not found` | The plugin is installed incorrectly — reinstall: `/plugin install books@jadlis` |
 | `downloaded file suspiciously small` | The partner server returned a stub — Claude takes the next candidate |
 
 ## Limits

@@ -1,6 +1,20 @@
-# Changelog — annas-archive
+# Changelog — books
 
 Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/), версии — [SemVer](https://semver.org/lang/ru/).
+
+## [1.1.0] — 2026-09-07 — переименование в books / renamed to books
+
+### Для человека
+- Плагин переименован в `books`, команда `/books`; репо — `jadlis-books`, маркетплейс `jadlis`. Старая установка `annas-archive@becyborg-library` продолжает работать через `renames`.
+
+### For agents
+- Renamed: `plugins/annas-archive/` → `plugins/books/`; `skills/annas-archive/` → `skills/books/`; репозиторий `beCyborg/annas-archive-plugin` → `beCyborg/jadlis-books`.
+- Changed: `plugins/books/.claude-plugin/plugin.json` — `name` `annas-archive` → `books`, `version` 1.0.2 → 1.1.0, `displayName`, `homepage`/`repository`.
+- Changed: `.claude-plugin/marketplace.json` — запись плагина `name: books`, `source: ./plugins/books`, добавлен `renames: {"annas-archive": "books"}`; имя маркетплейса `becyborg-library` не менялось.
+- Changed: `.github/workflows/` — CI переведён на переиспользуемый workflow `beCyborg/jadlis-start/.github/workflows/plugin-ci.yml@main` (`mode: marketplace`).
+- Changed: README (корень и плагин), `CLAUDE.md` — команды установки и вызова, пути, тег `books--v{X.Y.Z}`.
+- Unchanged: переменные окружения `ANNAS_ARCHIVE_KEY` / `ANNAS_ARCHIVE_MIRROR`, зеркала `annas-archive.*`, имена скриптов `aa_search.py` / `aa_download.py`, папка загрузок `~/Books/AnnasArchive`.
+- Migration: не требуется — `renames` перенаправляет существующие установки на новое имя.
 
 ## [1.0.2] — 2026-09-07 — репозиторий как источник правды / repo as source of truth
 
