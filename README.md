@@ -112,4 +112,4 @@ claude plugin update books@jadlis
 
 ## Лицензия
 
-MIT — см. [LICENSE](LICENSE). Детали по скиллу — [plugins/books/README.md](plugins/books/README.md).
+Лицензии нет: код открыт для чтения и личного использования, права сохранены за автором. Коммерческое использование, переиздание и включение в другие продукты — только по отдельной договорённости. Детали по скиллу — [plugins/books/README.md](plugins/books/README.md).
