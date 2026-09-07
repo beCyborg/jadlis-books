@@ -9,6 +9,17 @@ jobs:
   ci:
     uses: beCyborg/jadlis-start/.github/workflows/plugin-ci.yml@main
     with:
-      mode: marketplace
+      mode: plugin
       forbid-mermaid: false
     secrets: inherit
+
+  # `mode: marketplace` in the reusable workflow also runs `tools/bump-pin.py --check`,
+  # which lives only in the jadlis-plugins hub. This repo keeps a legacy
+  # marketplace.json, so the community plugin validator runs here directly.
+  validate-plugins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: anthropics/claude-plugins-community/.github/actions/validate-plugins@426e469f322952061102b286b378c0c9733a0934
+        with:
+          claude-cli-version: "2.1.263"
