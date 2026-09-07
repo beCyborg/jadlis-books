@@ -123,8 +123,11 @@ you do the reading. It does not parse book formats: it never looks inside an EPU
 does not judge the quality of the text. It does not do OCR on scans and does not repair broken files:
 it checks the first bytes and moves to the next candidate on a stub. It does not decide the doubtful
 cases for you — nothing in English, and it shows the options and asks; a DOI with no download request
-comes back as a candidate table. It does not reach logged-in places, or anywhere beyond the Anna's
-Archive mirrors and the download address it was handed.
+comes back as a candidate table. **It does not bring you a file by DOI:** it searches by one and finds
+the record, but the download route runs through the membership API by checksum, and for a journal
+article that route ends there — the paper comes from open access, fetched plainly and outside the
+plugin, and that part you do yourself. It does not reach logged-in places: the scripts only knock on
+the Anna's Archive mirrors and the download address they were handed.
 
 **What you need.** An active Anna's Archive membership and its API key from the account page: fast
 downloads go through the member API, and without the key the skill stops on the first step. The key
