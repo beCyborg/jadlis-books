@@ -10,7 +10,6 @@ jobs:
     uses: beCyborg/jadlis-start/.github/workflows/plugin-ci.yml@main
     with:
       mode: plugin
-      forbid-mermaid: false
     secrets: inherit
 
   # `mode: marketplace` in the reusable workflow also runs `tools/bump-pin.py --check`,
