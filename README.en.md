@@ -6,8 +6,8 @@ You name the title, the author or a DOI — the skill finds the record in Anna's
 file by a filter policy, pulls it with the member API and prints how many fast downloads are left.
 
 ```
-claude plugin marketplace add https://github.com/beCyborg/jadlis-start.git
-claude plugin install books@jadlis
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+claude plugin install jadlis-books@jadlis
 ```
 
 No key is asked for during install: downloads go through the member API, and you place the key
@@ -64,11 +64,11 @@ texts.
 **a) Text to paste to an agent.** Copy the whole thing into a Claude Code chat:
 
 ```
-You are the installer. Install the plugin books from the jadlis marketplace on this Mac.
+You are the installer. Install the plugin jadlis-books from the jadlis marketplace on this Mac.
 Run exactly these commands, verbatim, shortening nothing:
-1. claude plugin marketplace add https://github.com/beCyborg/jadlis-start.git
-2. claude plugin install books@jadlis
-3. claude plugin list — show me the line about books and its version.
+1. claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+2. claude plugin install jadlis-books@jadlis
+3. claude plugin list — show me the line about jadlis-books and its version.
 The plugin asks for no keys during install. Once it is in, tell me in one line:
 "Put the Anna's Archive key into the env block of ~/.claude/settings.json and restart Claude Code."
 Do not edit that file yourself and never print the key value: check only "present" or "absent".
@@ -80,13 +80,13 @@ If a command returns an error, stop, show me the output, and do not move to the 
 **b) Commands by hand.**
 
 ```
-claude plugin marketplace add https://github.com/beCyborg/jadlis-start.git
-claude plugin install books@jadlis
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+claude plugin install jadlis-books@jadlis
 claude plugin list
 ```
 
 The first command installs nothing — it adds the marketplace. Only the second one installs, and one
-line removes it: `claude plugin uninstall books@jadlis --keep-data`.
+line removes it: `claude plugin uninstall jadlis-books@jadlis --keep-data`.
 
 The key is not passed in here: the scripts read it from an environment variable, not from the
 plugin's config. Put it into the `env` block of `~/.claude/settings.json` — no such file yet means
@@ -160,12 +160,12 @@ first command you keep the version you installed.
 
 ```
 claude plugin marketplace update jadlis
-claude plugin update books@jadlis
+claude plugin update jadlis-books@jadlis
 claude plugin list
 ```
 
 Reinstall, if something ended up crooked:
 
 ```
-claude plugin uninstall books@jadlis --keep-data && claude plugin install books@jadlis
+claude plugin uninstall jadlis-books@jadlis --keep-data && claude plugin install jadlis-books@jadlis
 ```

@@ -1,6 +1,6 @@
 [Русский](README.md) · English
 
-# books — books and papers in one sentence
+# jadlis-books — books and papers in one sentence
 
 A librarian skill for Claude Code. You name a book — Claude finds it on Anna's Archive, picks the best file, downloads it through the membership API and reports the remaining quota.
 
@@ -69,7 +69,7 @@ Both scripts are stdlib + `curl`, with no dependencies. HTTP goes through `curl`
 | `API error: Invalid secret key` | The key expired or was copied truncated — check the membership and reissue |
 | `API error` about quota | The daily fast-download quota is spent — Claude keeps the md5 of what is left |
 | `all mirrors failed` | Mirrors are unreachable from your network — set your own: `ANNAS_ARCHIVE_MIRROR=https://<domain>` in the same `env` block (or shell profile) and restart Claude Code |
-| `ERROR: scripts not found` | The plugin is installed incorrectly — reinstall: `/plugin install books@jadlis` |
+| `ERROR: scripts not found` | The plugin is installed incorrectly — reinstall: `/plugin install jadlis-books@jadlis` |
 | `downloaded file suspiciously small` | The partner server returned a stub — Claude takes the next candidate |
 
 ## Limits

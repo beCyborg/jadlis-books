@@ -1,6 +1,6 @@
 Русский · [English](README.en.md)
 
-# books — книги и статьи одной фразой
+# jadlis-books — книги и статьи одной фразой
 
 Скилл-библиотекарь для Claude Code. Вы называете книгу — Claude ищет её в Архиве Анны, выбирает лучший файл, качает членским API и отчитывается об остатке квоты.
 
@@ -69,7 +69,7 @@
 | `API error: Invalid secret key` | Ключ истёк или скопирован с обрезкой — проверьте членство и перевыпустите |
 | `API error` про quota | Дневная квота быстрых загрузок исчерпана — Claude сохранит md5 недокачанного |
 | `all mirrors failed` | Зеркала недоступны из вашей сети — задайте своё: `ANNAS_ARCHIVE_MIRROR=https://<домен>`, туда же, в блок `env` (или профиль шелла), и перезапустите Claude Code |
-| `ERROR: scripts not found` | Плагин установлен некорректно — переустановите: `/plugin install books@jadlis` |
+| `ERROR: scripts not found` | Плагин установлен некорректно — переустановите: `/plugin install jadlis-books@jadlis` |
 | `downloaded file suspiciously small` | Партнёрский сервер отдал заглушку — Claude возьмёт следующего кандидата |
 
 ## Ограничения

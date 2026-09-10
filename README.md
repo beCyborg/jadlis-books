@@ -6,8 +6,8 @@
 фильтров, качает членским API и печатает остаток быстрых загрузок.
 
 ```
-claude plugin marketplace add https://github.com/beCyborg/jadlis-start.git
-claude plugin install books@jadlis
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+claude plugin install jadlis-books@jadlis
 ```
 
 Ключ при установке не спрашивают: скачивание идёт членским API, и ключ кладёшь ты сам — в блок `env`
@@ -62,11 +62,11 @@ PDF → `%PDF`), слишком маленький файл удаляется �
 **а) Текст для вставки агенту.** Скопируй целиком в чат Claude Code:
 
 ```
-Ты — установщик. Поставь на этот Mac плагин books из маркетплейса jadlis.
+Ты — установщик. Поставь на этот Mac плагин jadlis-books из маркетплейса jadlis.
 Выполни ровно эти команды, дословно, ничего не сокращая:
-1. claude plugin marketplace add https://github.com/beCyborg/jadlis-start.git
-2. claude plugin install books@jadlis
-3. claude plugin list — покажи мне строку про books и его версию.
+1. claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+2. claude plugin install jadlis-books@jadlis
+3. claude plugin list — покажи мне строку про jadlis-books и его версию.
 Ключей плагин при установке не спрашивает. После установки скажи мне одной строкой:
 «Положи ключ Архива Анны в блок env файла ~/.claude/settings.json и перезапусти Claude Code».
 Сам файл не правь и значение ключа не печатай: проверяй только «есть» или «нет».
@@ -78,13 +78,13 @@ PDF → `%PDF`), слишком маленький файл удаляется �
 **б) Команды руками.**
 
 ```
-claude plugin marketplace add https://github.com/beCyborg/jadlis-start.git
-claude plugin install books@jadlis
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+claude plugin install jadlis-books@jadlis
 claude plugin list
 ```
 
 Первая команда ничего не ставит — она добавляет маркетплейс. Ставит только вторая, и снимается
-она одной строкой: `claude plugin uninstall books@jadlis --keep-data`.
+она одной строкой: `claude plugin uninstall jadlis-books@jadlis --keep-data`.
 
 Ключ сюда не передаётся: скрипты читают его из переменной окружения, а не из конфига плагина.
 Положи его в блок `env` файла `~/.claude/settings.json` — файла ещё нет, значит это его содержимое
@@ -155,12 +155,12 @@ claude plugin list
 
 ```
 claude plugin marketplace update jadlis
-claude plugin update books@jadlis
+claude plugin update jadlis-books@jadlis
 claude plugin list
 ```
 
 Переустановка, если что-то встало криво:
 
 ```
-claude plugin uninstall books@jadlis --keep-data && claude plugin install books@jadlis
+claude plugin uninstall jadlis-books@jadlis --keep-data && claude plugin install jadlis-books@jadlis
 ```

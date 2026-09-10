@@ -1,6 +1,24 @@
-# Changelog — books
+# Changelog — jadlis-books
 
 Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/), версии — [SemVer](https://semver.org/lang/ru/).
+
+## [2.0.0] — 2026-09-10 — переименование в jadlis-books / renamed to jadlis-books
+
+### Для человека
+- Плагин переименован: `books` → `jadlis-books`. Ставится теперь строкой `claude plugin install jadlis-books@jadlis`, маркетплейс добавляется по адресу хаба `https://github.com/beCyborg/jadlis-hub`.
+- Короткая команда `/books` не изменилась — её задаёт `name:` во frontmatter скилла; полная форма стала `/jadlis-books:books`.
+- Совместимости со старым именем нет: запись `renames` убрана, внешних установок не было. Стоит старая версия — переустановите под новым именем.
+
+### For agents
+- Changed: `plugins/books/.claude-plugin/plugin.json` — `name` `books` → `jadlis-books`, `version` 1.1.0 → 2.0.0, `displayName`.
+- Changed: `.claude-plugin/marketplace.json` — запись плагина `name: jadlis-books`; блок `renames` удалён; имя маркетплейса `becyborg-library` и `source: ./plugins/books` не менялись.
+- Changed: `README.md` / `README.en.md` (корень) — `claude plugin marketplace add https://github.com/beCyborg/jadlis-hub`, установка/обновление/удаление под именем `jadlis-books`; текст промпта-установщика.
+- Changed: `plugins/books/README.md` / `README.en.md` — заголовок `jadlis-books`, строка `/plugin install jadlis-books@jadlis` в Troubleshooting.
+- Changed: `CLAUDE.md` — хаб `jadlis-hub`, тег `jadlis-books--v{X.Y.Z}`, пути инструментов `~/jadlis-hub/tools/`, рабочий клон `~/jadlis-books`, правило про `renames` заменено на «без совместимости».
+- Changed: `.github/workflows/ci.yml` — переиспользуемый workflow `beCyborg/jadlis-hub/.github/workflows/plugin-ci.yml@main`.
+- Unchanged: папки `plugins/books/` и `skills/books/`, `name: books` во frontmatter скилла, переменные `ANNAS_ARCHIVE_KEY` / `ANNAS_ARCHIVE_MIRROR`, скрипты `aa_search.py` / `aa_download.py`, папка загрузок `~/Books/AnnasArchive`.
+- Breaking: имя плагина изменилось, `renames` нет — старая установка `books@jadlis` не обновится сама.
+- Migration: `claude plugin uninstall books@jadlis --keep-data && claude plugin install jadlis-books@jadlis`.
 
 ## [1.1.0] — 2026-09-07 — переименование в books / renamed to books
 

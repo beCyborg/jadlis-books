@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "books",
-  "version": "1.1.0",
-  "displayName": "books — книга или статья за минуту",
+  "name": "jadlis-books",
+  "version": "2.0.0",
+  "displayName": "jadlis-books — книга или статья за минуту",
   "description": "Скилл-библиотекарь для Архива Анны: поиск по названию/автору/DOI, выбор лучшего файла по политике EPUB → английский → новее → популярнее, скачивание членским API быстрых загрузок, отчёт с остатком квоты. Батч-списки и научные статьи по DOI.",
   "author": {
     "name": "Be Cyborg"

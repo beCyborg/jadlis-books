@@ -1,6 +1,6 @@
 # jadlis-books — конвенции репо
 
-Репозиторий одного плагина: маркетплейс `becyborg-library`, плагин в `plugins/books`. Основной путь установки у получателя — хаб `jadlis` (`https://github.com/beCyborg/jadlis-plugins.git`), который тянет этот репо записью `git-subdir` с пином `ref` + `sha`. Правила ниже читает агент, который правит и коммитит.
+Репозиторий одного плагина: маркетплейс `becyborg-library`, плагин в `plugins/books`. Основной путь установки у получателя — хаб `jadlis` (`https://github.com/beCyborg/jadlis-hub`), который тянет этот репо записью `git-subdir` с пином `ref` + `sha`. Правила ниже читает агент, который правит и коммитит.
 
 ## Коммиты
 
@@ -11,30 +11,30 @@
 ## Релизы
 
 - Версия живёт только в `plugins/books/.claude-plugin/plugin.json`; бамп — в том же коммите, что и изменение (версия = ключ кеша обновлений).
-- Тег `books--v{X.Y.Z}`: `claude plugin tag --push plugins/books`. GitHub Release поверх тега: заголовок и тело — `python3 ~/jadlis-plugins/tools/release-notes.py plugins/books [--title]`.
+- Тег `jadlis-books--v{X.Y.Z}`: `claude plugin tag --push plugins/books`. GitHub Release поверх тега: заголовок и тело — `python3 ~/jadlis-hub/tools/release-notes.py plugins/books [--title]`.
 - `CHANGELOG.md` плагина: `## [X.Y.Z] — YYYY-MM-DD — <кратко по-русски> / <short EN>`, затем `### Для человека` (≤3 буллета) и `### For agents` (`Added / Changed / Removed / Migration / Breaking`, с путями).
-- После релиза обновить пин в хабе: `python3 ~/jadlis-plugins/tools/bump-pin.py books books--v{X.Y.Z}`.
+- После релиза обновить пин в хабе: `python3 ~/jadlis-hub/tools/bump-pin.py jadlis-books jadlis-books--v{X.Y.Z}`.
 - Только patch-forward: никаких force-push и переписывания тегов.
 
 ## README и доки
 
-- Пара `README.md` (RU) + `README.en.md` (EN) — и в корне, и в папке плагина; первая строка — переключатель языка. Одинаковое число и порядок H2. Проверка: `python3 ~/jadlis-plugins/tools/readme-parity.py .`
+- Пара `README.md` (RU) + `README.en.md` (EN) — и в корне, и в папке плагина; первая строка — переключатель языка. Одинаковое число и порядок H2. Проверка: `python3 ~/jadlis-hub/tools/readme-parity.py .`
 - Пять секций документа инструмента: **Зачем / Как выглядит / Как поставить / Как пользоваться / Границы и стоимость**; дополнительные H2 («Обновление», «Лицензия») — только одинаково в обеих языковых версиях.
-- Иллюстрации — `docs/img/*.webp`, копии из `~/jadlis-plugins/docs/img/`; каждая просмотрена глазами, отметка ☑ ставится в `~/jadlis-plugins/docs/img/INDEX.md`. Схемы — Mermaid.
-- Числа и механику сверять со скриптами (`aa_search.py`, `aa_download.py`) и писать рядом тег (`(тег books--v1.0.1)`). Примеры вывода — синтетические.
+- Иллюстрации — `docs/img/*.webp`, копии из `~/jadlis-hub/docs/img/`; каждая просмотрена глазами, отметка ☑ ставится в `~/jadlis-hub/docs/img/INDEX.md`. Схемы — Mermaid.
+- Числа и механику сверять со скриптами (`aa_search.py`, `aa_download.py`) и писать рядом тег (`(тег jadlis-books--v1.0.1)`). Примеры вывода — синтетические.
 - Оценок времени в доках не давать: вместо «за 10 минут» — что именно нужно сделать.
 
 ## Приватность и ключи
 
-- В файлах репо нет ключей, почт, телефонов, путей владельца (`/Users/<имя>` → `~`) и имени владельца. Перед пушем: `gitleaks git .` и `python3 ~/jadlis-plugins/tools/privacy-grep.py .` (оба гоняет CI).
+- В файлах репо нет ключей, почт, телефонов, путей владельца (`/Users/<имя>` → `~`) и имени владельца. Перед пушем: `gitleaks git .` и `python3 ~/jadlis-hub/tools/privacy-grep.py .` (оба гоняет CI).
 - Ключ `ANNAS_ARCHIVE_KEY` живёт только у получателя — в блоке `env` файла `~/.claude/settings.json` либо в профиле шелла. В репо, в примерах и в логах его быть не может: скрипты читают ключ из окружения и вычищают из текстов ошибок. Никогда не печатать значение ключа в вывод скилла.
 - Домашний стандарт хранит ключи в Связке ключей macOS; у этого плагина своего читателя Связки нет — если он появится, доки правятся вместе с кодом, а не раньше.
 - Плагин ходит только на зеркала Архива Анны и на выданный API адрес загрузки; новых доменов в скриптах не заводить без явной просьбы.
 
 ## Разработка
 
-- Правки только в рабочем клоне `~/annas-archive-plugin`, никогда в `~/.claude/plugins/marketplaces/` (фоновый рефреш стирает правки).
+- Правки только в рабочем клоне `~/jadlis-books`, никогда в `~/.claude/plugins/marketplaces/` (фоновый рефреш стирает правки).
 - Перед коммитом: `claude plugin validate plugins/books`, `claude plugin validate .claude-plugin/marketplace.json`, `readme-parity.py`, `privacy-grep.py`.
 - Скрипты — stdlib + `curl`, без внешних зависимостей: HTTP через `curl`, потому что WAF отдаёт 403 на `urllib`. Зависимости не добавлять.
-- Имя плагина — `books`, маркетплейс — `becyborg-library` (историческое имя, менять нельзя). Переименование `annas-archive` → `books` (1.1.0) закрыто записью `renames` в `.claude-plugin/marketplace.json`: старые установки продолжают обновляться. Дальнейшие переименования — только с новой записью в `renames`.
+- Имя плагина — `jadlis-books`, маркетплейс — `becyborg-library` (историческое имя, менять нельзя). Переименование `books` → `jadlis-books` (2.0.0) сделано без совместимости: блок `renames` из `.claude-plugin/marketplace.json` убран, внешних установок нет. Короткая команда `/books` не менялась — её задаёт `name:` во frontmatter скилла.
 - Язык доков — русский (RU-файл первичен) + английская пара; код, идентификаторы и имена файлов — английский.
