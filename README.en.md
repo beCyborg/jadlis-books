@@ -1,4 +1,4 @@
-English · [Русский](README.md)
+[Русский](README.md) · English
 
 # You need the book right now, and you are assembling it out of tabs: wrong format, wrong language, and the file you did download opens as a stub
 
@@ -6,7 +6,7 @@ You name the title, the author or a DOI — the skill finds the record in Anna's
 file by a filter policy, pulls it with the member API and prints how many fast downloads are left.
 
 ```
-claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 ```
 
@@ -66,7 +66,7 @@ texts.
 ```
 You are the installer. Install the plugin jadlis-books from the jadlis marketplace on this Mac.
 Run exactly these commands, verbatim, shortening nothing:
-1. claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+1. claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
 2. claude plugin install jadlis-books@jadlis
 3. claude plugin list — show me the line about jadlis-books and its version.
 The plugin asks for no keys during install. Once it is in, tell me in one line:
@@ -80,7 +80,7 @@ If a command returns an error, stop, show me the output, and do not move to the 
 **b) Commands by hand.**
 
 ```
-claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 claude plugin list
 ```
@@ -115,6 +115,55 @@ If it is not found, check the name with `claude plugin list`. The skill also com
 phrase, without a slash: "find the book …", "download these books: …", "download the paper by DOI …".
 With no key it stops at the very first check and shows you where to put one; that is expected
 behaviour, not a breakage.
+
+More example phrases:
+
+- "download The Mom Test in epub"
+- "find the book Obviously Awesome"
+- "download these books: …" — a list runs as one batch
+- "download the paper with DOI 10.1038/nature12373"
+
+The full form of the command is `/jadlis-books:books <request>`.
+
+**Check after install.** The request `download The Mom Test in epub` puts the file
+`~/Books/AnnasArchive/Rob Fitzpatrick — The Mom Test (2013).epub` in place. The report shows the
+format, size, year and the remaining fast downloads.
+
+## What is inside and how a file is picked
+
+| File | Role |
+|---|---|
+| `skills/books/SKILL.md` | the instruction: selection policy, fallbacks, error handling |
+| `skills/books/references/gotchas.md` | traps from real downloads: DNS, quota, DOI |
+| `skills/books/scripts/aa_search.py` | search (HTML parsing of `/search`), DOI and `--meta` modes |
+| `skills/books/scripts/aa_download.py` | download via `/dyn/api/fast_download.json`, file verification |
+
+Both scripts are stdlib + `curl`, with no dependencies. HTTP goes through `curl` because the WAF
+returns 403 for `urllib` requests.
+
+File selection policy:
+
+1. Title and author match.
+2. The fast-download flag (🚀) is mandatory, otherwise the membership API will not serve the file.
+3. Format: EPUB → PDF → MOBI/AZW3 → FB2/DJVU.
+4. Language: English by default, or whichever you asked for.
+5. On a tie: more mirror sources → newer year → size not microscopic.
+
+## If something goes wrong
+
+| Symptom | Cause and fix |
+|---|---|
+| `ERROR: ANNAS_ARCHIVE_KEY not set` | The session cannot see the key. Add it as described above and restart Claude Code |
+| `API error: Invalid secret key` | The key expired or was copied truncated. Check the membership and reissue the key |
+| `API error` about quota | The daily fast-download quota is spent. The skill keeps the md5 of what is left |
+| `all mirrors failed` | The mirrors are unreachable from your network. Set your own: `ANNAS_ARCHIVE_MIRROR=https://<domain>` in the `env` block (or shell profile) and restart Claude Code |
+| `ERROR: scripts not found` | The plugin is installed incorrectly. Reinstall it with the command from "Updating" below |
+| `downloaded file suspiciously small` | The partner server returned a stub. The skill takes the next candidate |
+
+Two more caveats:
+
+- Re-downloading the same md5 may spend quota, so the skill checks the folder before downloading.
+- Search parses the site's HTML: if the site changes its layout, `aa_search.py` will need editing.
 
 ## Limits, cost, updating
 
@@ -169,3 +218,18 @@ Reinstall, if something ended up crooked:
 ```
 claude plugin uninstall jadlis-books@jadlis --keep-data && claude plugin install jadlis-books@jadlis
 ```
+
+**Moving from 2.x.** Since 3.0.0 the repository lives on GitLab and the plugin sits at the
+repository root. If you installed the plugin from the old jadlis-books catalogue (the
+`becyborg-library` marketplace), the update will not arrive by itself. Remove the old install and put
+the plugin in from the jadlis hub:
+
+```
+claude plugin uninstall jadlis-books@becyborg-library --keep-data
+claude plugin marketplace remove becyborg-library
+claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+claude plugin install jadlis-books@jadlis
+```
+
+If your `jadlis` marketplace still points at the old GitHub address, remove it first:
+`claude plugin marketplace remove jadlis`. Then run the last two commands from the block above.

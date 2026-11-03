@@ -2,6 +2,26 @@
 
 Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/), версии — [SemVer](https://semver.org/lang/ru/).
 
+## [Unreleased]
+
+## [3.0.0] — 2026-11-03 — репозиторий на GitLab, плагин в корне / repo moved to GitLab, plugin at repo root
+
+### Для человека
+- Репозиторий переехал на GitLab: `https://gitlab.com/beCyborg/jadlis-books`. Ставится плагин из хаба: `claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git`, затем `claude plugin install jadlis-books@jadlis`.
+- Плагин теперь лежит в корне репозитория, отдельного каталога `becyborg-library` больше нет. Имя `jadlis-books` и команда `/books` не изменились.
+- Если плагин стоял из старого каталога jadlis-books (git-subdir, маркетплейс `becyborg-library`), удалите его и поставьте заново из хаба jadlis — команды ниже в Migration и в README («Переход с версии 2.x»).
+
+### For agents
+- Changed: `plugins/books/skills/` → `skills/`, `plugins/books/.claude-plugin/plugin.json` → `.claude-plugin/plugin.json`, `plugins/books/CHANGELOG.md` → `CHANGELOG.md`; папка `plugins/` удалена.
+- Changed: `.claude-plugin/plugin.json` — `version` 2.0.0 → 3.0.0, `homepage`/`repository` → `https://gitlab.com/beCyborg/jadlis-books`, keyword `jadlis`.
+- Changed: `README.md` / `README.en.md` — слиты с README плагина (примеры фраз, проверка после установки, «Что внутри и как выбирается файл», «Если что-то не так»); адрес хаба `https://gitlab.com/beCyborg/jadlis-hub.git`; раздел о переходе с 2.x. Первая строка `README.en.md` — `[Русский](README.md) · English`.
+- Changed: `CLAUDE.md` → `.claude/CLAUDE.md` (корневой `CLAUDE.md` валит `claude plugin validate --strict`), переписан под корень-как-плагин и инструменты `~/jadlis-hub-gitlab/tools/`.
+- Removed: `.claude-plugin/marketplace.json` (маркетплейс `becyborg-library`), `plugins/books/README.md`, `plugins/books/README.en.md`, `.github/`.
+- Added: `.gitlab-ci.yml` (include `/ci/plugin-ci.yml` из `beCyborg/jadlis-hub`), расширенный `.gitignore`.
+- Unchanged: `skills/books/SKILL.md`, скрипты `aa_search.py` / `aa_download.py`, переменные `ANNAS_ARCHIVE_KEY` / `ANNAS_ARCHIVE_MIRROR`, папка загрузок `~/Books/AnnasArchive`.
+- Breaking: маркетплейс `becyborg-library` и источник `git-subdir` `plugins/books` больше не существуют — установка `jadlis-books@becyborg-library` не обновится.
+- Migration: `claude plugin uninstall jadlis-books@becyborg-library --keep-data && claude plugin marketplace remove becyborg-library && claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git && claude plugin install jadlis-books@jadlis`. Маркетплейс `jadlis` всё ещё смотрит на GitHub — сначала `claude plugin marketplace remove jadlis`.
+
 ## [2.0.0] — 2026-09-10 — переименование в jadlis-books / renamed to jadlis-books
 
 ### Для человека

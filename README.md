@@ -6,7 +6,7 @@
 фильтров, качает членским API и печатает остаток быстрых загрузок.
 
 ```
-claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 ```
 
@@ -64,7 +64,7 @@ PDF → `%PDF`), слишком маленький файл удаляется �
 ```
 Ты — установщик. Поставь на этот Mac плагин jadlis-books из маркетплейса jadlis.
 Выполни ровно эти команды, дословно, ничего не сокращая:
-1. claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+1. claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
 2. claude plugin install jadlis-books@jadlis
 3. claude plugin list — покажи мне строку про jadlis-books и его версию.
 Ключей плагин при установке не спрашивает. После установки скажи мне одной строкой:
@@ -78,7 +78,7 @@ PDF → `%PDF`), слишком маленький файл удаляется �
 **б) Команды руками.**
 
 ```
-claude plugin marketplace add https://github.com/beCyborg/jadlis-hub
+claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 claude plugin list
 ```
@@ -112,6 +112,55 @@ claude plugin list
 слэша: «найди книгу …», «скачай эти книги: …», «скачай статью по DOI …». Ключа нет — скилл
 остановится на первой же проверке и покажет, куда его положить; это ожидаемое поведение, а не
 поломка.
+
+Ещё примеры фраз:
+
+- «скачай The Mom Test в epub»
+- «найди книгу Обречены побеждать»
+- «скачай эти книги: …» — список идёт одним батчем
+- «скачай статью по DOI 10.1038/nature12373»
+
+Полная форма команды — `/jadlis-books:books <запрос>`.
+
+**Проверка после установки.** Запрос `скачай The Mom Test в epub` кладёт файл
+`~/Books/AnnasArchive/Rob Fitzpatrick — The Mom Test (2013).epub`. В отчёте — формат, размер, год и
+остаток быстрых загрузок.
+
+## Что внутри и как выбирается файл
+
+| Файл | Роль |
+|---|---|
+| `skills/books/SKILL.md` | инструкция: политика выбора, фоллбэки, обработка ошибок |
+| `skills/books/references/gotchas.md` | ловушки из реальных загрузок: DNS, квота, DOI |
+| `skills/books/scripts/aa_search.py` | поиск (парсинг HTML `/search`), режимы DOI и `--meta` |
+| `skills/books/scripts/aa_download.py` | скачивание через `/dyn/api/fast_download.json`, проверка файла |
+
+Оба скрипта — stdlib + `curl`, без зависимостей. HTTP идёт через `curl`, потому что WAF отдаёт 403 на
+запросы из `urllib`.
+
+Политика выбора файла:
+
+1. Совпадение названия и автора.
+2. Флаг быстрой загрузки (🚀) обязателен, иначе членский API файл не отдаст.
+3. Формат: EPUB → PDF → MOBI/AZW3 → FB2/DJVU.
+4. Язык: английский по умолчанию или тот, что ты попросил.
+5. При равенстве: больше зеркал-источников → новее год → размер не микроскопический.
+
+## Если что-то не так
+
+| Симптом | Причина и что делать |
+|---|---|
+| `ERROR: ANNAS_ARCHIVE_KEY not set` | Сессия не видит ключ. Добавь его по инструкции выше и перезапусти Claude Code |
+| `API error: Invalid secret key` | Ключ истёк или скопирован с обрезкой. Проверь членство и перевыпусти ключ |
+| `API error` про quota | Дневная квота быстрых загрузок исчерпана. Скилл сохранит md5 недокачанного |
+| `all mirrors failed` | Зеркала недоступны из твоей сети. Задай своё: `ANNAS_ARCHIVE_MIRROR=https://<домен>` в блок `env` (или профиль шелла) и перезапусти Claude Code |
+| `ERROR: scripts not found` | Плагин установлен криво. Переустанови его командой из раздела «Обновление» ниже |
+| `downloaded file suspiciously small` | Партнёрский сервер отдал заглушку. Скилл возьмёт следующего кандидата |
+
+Ещё две оговорки:
+
+- Повторное скачивание того же md5 может тратить квоту, поэтому скилл проверяет папку перед загрузкой.
+- Поиск парсит HTML сайта: если сайт сменит вёрстку, `aa_search.py` придётся править.
 
 ## Границы, стоимость, обновление
 
@@ -164,3 +213,17 @@ claude plugin list
 ```
 claude plugin uninstall jadlis-books@jadlis --keep-data && claude plugin install jadlis-books@jadlis
 ```
+
+**Переход с версии 2.x.** С версии 3.0.0 репозиторий живёт на GitLab, а плагин лежит в корне
+репозитория. Если плагин стоял из старого каталога jadlis-books (маркетплейс `becyborg-library`),
+обновление не приедет само. Удали старую установку и поставь плагин из хаба jadlis:
+
+```
+claude plugin uninstall jadlis-books@becyborg-library --keep-data
+claude plugin marketplace remove becyborg-library
+claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+claude plugin install jadlis-books@jadlis
+```
+
+Если маркетплейс `jadlis` у тебя ещё смотрит на старый адрес на GitHub, сначала убери его:
+`claude plugin marketplace remove jadlis`. Потом выполни две последние команды из блока выше.
