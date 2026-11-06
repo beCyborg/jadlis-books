@@ -6,7 +6,7 @@ You name the title, the author or a DOI — the skill finds the record in Anna's
 file by a filter policy, pulls it with the member API and prints how many fast downloads are left.
 
 ```
-claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 ```
 
@@ -66,7 +66,7 @@ texts.
 ```
 You are the installer. Install the plugin jadlis-books from the jadlis marketplace on this Mac.
 Run exactly these commands, verbatim, shortening nothing:
-1. claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+1. claude plugin marketplace add https://github.com/beCyborg/jadlis-hub.git
 2. claude plugin install jadlis-books@jadlis
 3. claude plugin list — show me the line about jadlis-books and its version.
 The plugin asks for no keys during install. Once it is in, tell me in one line:
@@ -80,7 +80,7 @@ If a command returns an error, stop, show me the output, and do not move to the 
 **b) Commands by hand.**
 
 ```
-claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 claude plugin list
 ```
@@ -219,7 +219,7 @@ Reinstall, if something ended up crooked:
 claude plugin uninstall jadlis-books@jadlis --keep-data && claude plugin install jadlis-books@jadlis
 ```
 
-**Moving from 2.x.** Since 3.0.0 the repository lives on GitLab and the plugin sits at the
+**Moving from 2.x.** Since 3.0.0 the plugin sits at the
 repository root. If you installed the plugin from the old jadlis-books catalogue (the
 `becyborg-library` marketplace), the update will not arrive by itself. Remove the old install and put
 the plugin in from the jadlis hub:
@@ -227,7 +227,7 @@ the plugin in from the jadlis hub:
 ```
 claude plugin uninstall jadlis-books@becyborg-library --keep-data
 claude plugin marketplace remove becyborg-library
-claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 ```
 

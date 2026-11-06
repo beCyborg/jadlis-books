@@ -6,7 +6,7 @@
 фильтров, качает членским API и печатает остаток быстрых загрузок.
 
 ```
-claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 ```
 
@@ -64,7 +64,7 @@ PDF → `%PDF`), слишком маленький файл удаляется �
 ```
 Ты — установщик. Поставь на этот Mac плагин jadlis-books из маркетплейса jadlis.
 Выполни ровно эти команды, дословно, ничего не сокращая:
-1. claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+1. claude plugin marketplace add https://github.com/beCyborg/jadlis-hub.git
 2. claude plugin install jadlis-books@jadlis
 3. claude plugin list — покажи мне строку про jadlis-books и его версию.
 Ключей плагин при установке не спрашивает. После установки скажи мне одной строкой:
@@ -78,7 +78,7 @@ PDF → `%PDF`), слишком маленький файл удаляется �
 **б) Команды руками.**
 
 ```
-claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 claude plugin list
 ```
@@ -214,14 +214,14 @@ claude plugin list
 claude plugin uninstall jadlis-books@jadlis --keep-data && claude plugin install jadlis-books@jadlis
 ```
 
-**Переход с версии 2.x.** С версии 3.0.0 репозиторий живёт на GitLab, а плагин лежит в корне
+**Переход с версии 2.x.** С версии 3.0.0 плагин лежит в корне
 репозитория. Если плагин стоял из старого каталога jadlis-books (маркетплейс `becyborg-library`),
 обновление не приедет само. Удали старую установку и поставь плагин из хаба jadlis:
 
 ```
 claude plugin uninstall jadlis-books@becyborg-library --keep-data
 claude plugin marketplace remove becyborg-library
-claude plugin marketplace add https://gitlab.com/beCyborg/jadlis-hub.git
+claude plugin marketplace add https://github.com/beCyborg/jadlis-hub.git
 claude plugin install jadlis-books@jadlis
 ```
 
